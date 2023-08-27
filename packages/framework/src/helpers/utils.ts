@@ -13,6 +13,7 @@ export function addAutoWired(target: Object, propertyKey: string | symbol, name?
   autoWiredList.push({
     type,
     propertyKey,
+    name,
   });
   Reflect.defineMetadata(MetaDataKeys.InjectableAutoWired, autoWiredList, target);
 }
