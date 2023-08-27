@@ -104,4 +104,50 @@ describe('simple demo', () => {
     expect(testModel.calc1(1)).toBe(2);
     expect(testModel.calc2()).toBe(9);
   });
+
+  it('test model in different modules', () => {
+    abstract class ITestService {
+      public abstract calc(a: number, b: number): number;
+    }
+    @Injectable('test1')
+    class TestService1 extends ITestService {
+      public calc(a: number, b: number) {
+        return a + b;
+      }
+    }
+    @Injectable('test2')
+    class TestService2 extends ITestService {
+      public calc(a: number, b: number) {
+        return 9;
+      }
+    }
+    class TestModel extends BaseModel {
+      @AutoWired()
+      private service!: ITestService;
+
+      public a = 1;
+
+      public calc(b: number) {
+        return this.service.calc(this.a, b);
+      }
+    }
+    @Module({
+      providers: [TestService1],
+    })
+    class TestModule1 extends BaseModule {}
+
+    @Module({
+      providers: [TestService2],
+    })
+    class TestModule2 extends BaseModule {}
+
+    const testModel1 = TestModule1.createModel(new TestModel());
+    const testModel2 = TestModule2.createModel(new TestModel());
+
+    expect(testModel1.a).toBe(1);
+    expect(testModel1.calc(1)).toBe(2);
+
+    expect(testModel2.a).toBe(1);
+    expect(testModel2.calc(1)).toBe(9);
+  });
 });
