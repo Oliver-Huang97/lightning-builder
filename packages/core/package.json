@@ -6,14 +6,13 @@
   "types": "types/index.d.ts",
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
-    "dev": "rollup -c -w",
+    "dev": "rollup -c -w --bundleConfigAsCjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@lightning-builder/framework": "workspace:^1.0.0",
     "dexie": "^3.2.4",
     "rollup": "^4.0.2",
-    "rollup-plugin-typescript": "^1.0.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
