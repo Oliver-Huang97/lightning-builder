@@ -5,7 +5,7 @@ export function createInstance<T extends Object>(module: typeof BaseModule, targ
   const instances = getModuleMetaData(module)?.instances || [];
   getAutoWiredList(target).forEach((item) => {
     const itemInstances = instances.filter((i) => {
-      if (!(i.instance instanceof item.type)) {
+      if (!(item.type && i.instance instanceof item.type)) {
         return false;
       }
       return item.name ? item.name === i.name : true;
@@ -13,13 +13,13 @@ export function createInstance<T extends Object>(module: typeof BaseModule, targ
 
     if (!itemInstances?.length) {
       throw new Error(
-        `Can\'t not AutoWired ${item.propertyKey.toString()} in ${item.type.toString()}, please provider it in module`,
+        `Can\'t not AutoWired ${item.propertyKey.toString()} in ${item.type?.toString()}, please provider it in module`,
       );
     }
 
     if (itemInstances.length > 1) {
       throw new Error(
-        `Can\'t not AutoWired ${item.propertyKey.toString()} in ${item.type.toString()}, because it has more than 1 provider`,
+        `Can\'t not AutoWired ${item.propertyKey.toString()} in ${item.type?.toString()}, because it has more than 1 provider`,
       );
     }
 

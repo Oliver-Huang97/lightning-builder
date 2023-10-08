@@ -1,0 +1,8 @@
+{
+  "extends": "@lightning-builder/common/tsconfig.json",
+  "include": [
+    "./**/*.ts",
+    "./**/*.d.ts"
+  ],
+  "exclude": ["./node_modules"]
+}

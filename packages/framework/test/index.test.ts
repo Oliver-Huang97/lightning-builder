@@ -1,4 +1,4 @@
-import { AutoWired, BaseModel, BaseModule, Injectable, Model, Module } from '../src';
+import { AutoWired, BaseModel, BaseModule, Injectable, Module } from '../src';
 
 describe('simple demo', () => {
   it('test result', () => {

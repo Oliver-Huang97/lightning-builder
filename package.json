@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:web-vue3": "pnpm run -C packages/web-vue3 dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +18,6 @@
   },
   "homepage": "https://github.com/Oliver-Huang97/lightning-builder#readme",
   "devDependencies": {
-    "prettier": "^3.0.2",
-    "typescript": "~5.1.6"
+    "prettier": "^3.0.2"
   }
 }

@@ -1,7 +1,9 @@
-import { ProjectAddRequest, ProjectRecord, ProjectService } from '../services/project.service';
+import { Injectable } from '@lightning-builder/framework';
+import { ProjectAddRequest, ProjectRecord, ProjectService } from '../services';
 import { uuid } from '../utils/utils';
 import { db } from './database';
 
+@Injectable()
 export class ProjectLocalService extends ProjectService {
   public getProjectList(): Promise<ProjectRecord[]> {
     return db.project.toArray();

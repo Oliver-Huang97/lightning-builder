@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { app } from '../stores/app.store';
 const columns = [
   {
     title: 'Title',
@@ -9,17 +10,12 @@ const columns = [
     key: 'actions',
   },
 ];
-const dataSource = [
-  {
-    name: 'test',
-  },
-];
 </script>
 
 <template>
   <a-page-header title="Projects" />
 
-  <a-table :dataSource="dataSource" :columns="columns">
+  <a-table :dataSource="app.projectList" :columns="columns">
     <template #bodyCell="{ column, text }">
       <template v-if="column.dataIndex === 'name'">
         <RouterLink :to="{ name: 'design', params: { id: '-1' } }">{{ text }}</RouterLink>

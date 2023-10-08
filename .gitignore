@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+packages/*/cjs
+packages/*/es
+packages/*/types
 
 # Editor directories and files
 .vscode/*

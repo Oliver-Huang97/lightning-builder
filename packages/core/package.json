@@ -1,12 +1,26 @@
 {
   "name": "@lightning-builder/core",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "cjs/index.js",
+  "module": "es/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs",
+    "dev": "rollup -c -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@lightning-builder/framework": "workspace:^1.0.0",
     "dexie": "^3.2.4",
+    "rollup": "^4.0.2",
+    "rollup-plugin-typescript": "^1.0.1",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@lightning-builder/common": "workspace:^1.0.0",
+    "@rollup/plugin-json": "^6.0.1",
+    "@types/uuid": "^9.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.2.2"
   }
 }
