@@ -13,8 +13,8 @@ class LocalServiceDatabase extends Dexie {
   public constructor() {
     super(name);
     this.version(DATABASE_VERSION).stores({
-      project: 'uuid',
-      file: 'uuid',
+      project: 'id',
+      file: 'id',
     });
   }
 }
