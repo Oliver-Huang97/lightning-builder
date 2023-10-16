@@ -7,6 +7,7 @@ export class AppModel extends BaseModel {
   private readonly projectService!: ProjectService;
 
   public projectList: Array<ProjectModel> = [];
+  public currentProject: ProjectModel | null = null;
 
   public getProjectList() {
     this.projectList = [];

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import LeftMenu from '@/components/LeftMenu.vue';
+import OpenFileManage from '@/components/OpenFileManage.vue';
 import RenderStage from '@/components/RenderStage.vue';
 
 const items = [
@@ -37,15 +38,9 @@ const items = [
       <a-layout-sider theme="light" width="240" class="left-sider">
         <LeftMenu />
       </a-layout-sider>
-      <a-layout class="layout-content-box">
-        <a-layout-header></a-layout-header>
-        <a-layout-content>
-          <RenderStage />
-        </a-layout-content>
-        <a-layout-footer></a-layout-footer>
-      </a-layout>
-      <a-layout-sider theme="light" class="right-sider">
-      </a-layout-sider>
+      <a-layout-content>
+        <OpenFileManage />
+      </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
@@ -69,27 +64,7 @@ const items = [
   }
 }
 
-.layout-content-box {
-  display: flex;
-  flex-direction: column;
-
-  >.ant-layout-header {
-    height: 28px;
-    line-height: 28px;
-    border-bottom: 1px solid #d9d9d9;
-    background-color: white;
-  }
-
-  >.ant-layout-content {
-    flex-grow: 1;
-  }
-}
-
 .left-sider {
   border-right: 1px solid #d9d9d9;
-}
-
-.right-sider {
-  border-left: 1px solid #d9d9d9;
 }
 </style>
