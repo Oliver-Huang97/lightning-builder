@@ -31,7 +31,7 @@ const items = [
     <a-layout-header>
       <a-space>
         <div class="logo">Lightning Builder</div>
-        <a-menu mode="horizontal" theme="dark" triggerSubMenuAction="click" :items="items" :selectable="false" />
+        <a-menu mode="horizontal" triggerSubMenuAction="click" :items="items" :selectable="false" />
       </a-space>
     </a-layout-header>
     <a-layout>
@@ -56,10 +56,11 @@ const items = [
     border-bottom: 1px solid #d9d9d9;
     padding: 0 24px;
     overflow: hidden;
+    background-color: white;
   }
 
   .logo {
-    color: rgba(255, 255, 255, .85);
+    color: rgba(0, 0, 0, .85);
     font-size: 16px;
   }
 }
