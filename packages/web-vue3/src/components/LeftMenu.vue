@@ -37,5 +37,9 @@ import FileManage from './FileManage.vue';
       margin-right: 0;
     }
   }
+
+  :deep(.ant-tabs-content)>.ant-tabs-tabpane {
+    padding-left: 0;
+  }
 }
 </style>

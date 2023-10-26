@@ -1,17 +1,25 @@
 <script lang="ts" setup>
+import { app } from '@/stores/app.store';
+import type { ProjectModel } from '@lightning-builder/core';
 import OpenPageEditor from './OpenPageEditor.vue';
+
+const project = app.currentProject as ProjectModel;
 
 </script>
 
 <template>
-  <a-tabs type="editable-card" size="small" :tab-bar-gutter="0" destroyInactiveTabPane hideAdd>
-    <a-tab-pane key="1" tab="1">
-      <OpenPageEditor />
-    </a-tab-pane>
-    <a-tab-pane key="2" tab="2">
+  <a-tabs v-if="project.openFiles.length" :active-key="project.currentOpenFile?.id" type="editable-card" size="small"
+    :tab-bar-gutter="0" destroyInactiveTabPane hideAdd @tab-click="(id: string) => project.openFile(id)"
+    @edit="(id: string) => project.closeFile(id)">
+    <a-tab-pane v-for="file in project.openFiles" :key="file.id" :tab="file.name">
       <OpenPageEditor />
     </a-tab-pane>
   </a-tabs>
+  <a-empty v-else style="padding-top: 24px;">
+    <template #description>
+      <span>Please Select File</span>
+    </template>
+  </a-empty>
 </template>
 
 <style lang="less" scoped>

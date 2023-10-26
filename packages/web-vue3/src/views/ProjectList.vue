@@ -49,7 +49,7 @@ app.getProjectList();
     </template>
   </a-table>
 
-  <a-modal :visible="visible" title="Create Project"
+  <a-modal v-model:open="visible" title="Create Project"
     :okButtonProps="{ disabled: !form.name, loading: createButtonLoading }" @ok="createProject">
     <a-form :model="form" @finish="createProject">
       <a-form-item label="Name" name="name" required>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import LeftMenu from '@/components/LeftMenu.vue';
 import OpenFileManage from '@/components/OpenFileManage.vue';
-import RenderStage from '@/components/RenderStage.vue';
+import { app } from '@/stores/app.store';
 
 const items = [
   {
@@ -24,10 +24,15 @@ const items = [
   },
 ];
 
+const props = defineProps<{
+  id: string;
+}>();
+
+app.getProjectList().then(() => app.selectProject(props.id));
 </script>
 
 <template>
-  <a-layout class="layout-container">
+  <a-layout v-if="app.currentProject" class="layout-container">
     <a-layout-header>
       <a-space>
         <div class="logo">Lightning Builder</div>
@@ -43,6 +48,8 @@ const items = [
       </a-layout-content>
     </a-layout>
   </a-layout>
+  <a-spin v-else size="large">
+  </a-spin>
 </template>
 
 <style lang="less" scoped>
@@ -67,5 +74,12 @@ const items = [
 
 .left-sider {
   border-right: 1px solid #d9d9d9;
+}
+
+.ant-spin-spinning {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 </style>

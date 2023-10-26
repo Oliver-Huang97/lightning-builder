@@ -1,5 +1,5 @@
 import { LocalServiceModule } from './local-services';
-import { AppModel } from './models';
 
+export { LocalServiceModule };
+export * from './models';
 export * from './services';
-export { AppModel, LocalServiceModule };

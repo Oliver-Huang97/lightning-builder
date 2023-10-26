@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "@lightning-builder/framework": "workspace:^1.0.0",
+    "ajv": "^8.12.0",
     "dexie": "^3.2.4",
+    "lodash": "^4.17.21",
     "rollup": "^4.0.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@lightning-builder/common": "workspace:^1.0.0",
     "@rollup/plugin-json": "^6.0.1",
+    "@types/lodash": "^4.14.200",
     "@types/uuid": "^9.0.2",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.2.2"

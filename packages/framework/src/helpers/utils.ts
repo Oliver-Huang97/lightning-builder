@@ -34,10 +34,12 @@ export function setInjectableName(target: Object, name: string): void {
   Reflect.defineMetadata(MetaDataKeys.InjectableName, name, target);
 }
 
+const modelBindModuleKey = Symbol(MetaDataKeys.ModelBindModule);
+
 export function getModelBindModule(target: BaseModel): typeof BaseModule | undefined {
-  return Reflect.getMetadata(MetaDataKeys.ModelBindModule, target);
+  return (target as any)[modelBindModuleKey];
 }
 
 export function setModelBindModule(target: BaseModel, module: typeof BaseModule) {
-  Reflect.defineMetadata(MetaDataKeys.ModelBindModule, module, target);
+  (target as any)[modelBindModuleKey] = module;
 }

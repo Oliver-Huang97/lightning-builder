@@ -57,14 +57,14 @@
   margin: 0;
   font-weight: normal;
 }
-
+html {
+  height: 100%;
+}
 body {
+  height: 100%;
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
   line-height: 1.6;
   font-family:
     Inter,

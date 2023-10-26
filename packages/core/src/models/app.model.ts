@@ -9,12 +9,18 @@ export class AppModel extends BaseModel {
   public projectList: Array<ProjectModel> = [];
   public currentProject: ProjectModel | null = null;
 
-  public getProjectList() {
+  public async getProjectList() {
     this.projectList = [];
-    this.projectService.getProjectList().then((res) => (this.projectList = res as any));
+    this.projectList = (await this.projectService.getProjectList()).map((i) =>
+      this.createModel(new ProjectModel(i, this)),
+    );
   }
 
   public createProject(data: ProjectAddRequest) {
     return this.projectService.createProject(data);
+  }
+
+  public selectProject(id: string) {
+    this.currentProject = this.projectList.find((i) => i.id === id) || null;
   }
 }
