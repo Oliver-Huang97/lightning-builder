@@ -1,15 +1,14 @@
 import { Injectable } from '@lightning-builder/framework';
 import { ComponentContent } from '../interfaces/component-content';
 
-export interface FileRecord {
+export interface FileListItem {
   id: string;
   name: string;
   isDirectory: boolean;
   parentId?: string;
   projectId: string;
 }
-
-export interface FileDetailRecord extends FileRecord {
+export interface FileRecord extends FileListItem {
   content: ComponentContent;
 }
 
@@ -22,9 +21,9 @@ export interface FileAddRequest {
 
 @Injectable()
 export abstract class FileService {
-  public abstract getFileList(projectId: string): Promise<Array<FileRecord>>;
+  public abstract getFileList(projectId: string): Promise<Array<FileListItem>>;
 
-  public abstract getFileDetail(id: string): Promise<FileDetailRecord | null>;
+  public abstract getFileDetail(id: string): Promise<FileRecord | null>;
 
   public abstract createFile(data: FileAddRequest): Promise<string>;
 

@@ -1,20 +1,26 @@
 import { AutoWired, BaseModel } from '@lightning-builder/framework';
-import { FileModel } from './file.model';
 import { FileService, ProjectRecord } from '../services';
 import { AppModel } from './app.model';
+import { LibraryService } from '../services/library.service';
+import { LibraryModel } from './library.model';
+import { ProjectFileModel } from './project-file.model';
 
 export class ProjectModel extends BaseModel {
   @AutoWired()
   private readonly fileService!: FileService;
+  @AutoWired()
+  private readonly libraryService!: LibraryService;
 
   public id: string;
   public name: string;
+  public libraryIds = ['ant-design-vue'];
 
-  public allFileList: Array<FileModel> = [];
-  public allFileMap: Record<string, FileModel> = {};
-  public treeFileList: Array<FileModel> = [];
-  public openFiles: Array<FileModel> = [];
-  public currentOpenFile: FileModel | null = null;
+  public libraryList: Array<LibraryModel> = [];
+  public allFileList: Array<ProjectFileModel> = [];
+  public allFileMap: Record<string, ProjectFileModel> = {};
+  public treeFileList: Array<ProjectFileModel> = [];
+  public openFiles: Array<ProjectFileModel> = [];
+  public currentOpenFile: ProjectFileModel | null = null;
 
   public app: AppModel;
 
@@ -25,19 +31,31 @@ export class ProjectModel extends BaseModel {
     this.app = app;
   }
 
+  public async getLibraryList() {
+    this.libraryList = (
+      await Promise.all(
+        this.libraryIds.map((i) =>
+          this.libraryService
+            .getLibrary(i)
+            .then((record) => record && new LibraryModel(record, this.app)),
+        ),
+      )
+    ).filter((i) => i) as Array<LibraryModel>;
+  }
+
   public async getFileList() {
     this.allFileList = [];
     this.allFileMap = {};
     this.treeFileList = [];
     this.allFileList = (await this.fileService.getFileList(this.id)).map((i) =>
-      this.createModel(new FileModel(i, this)),
+      this.createModel(new ProjectFileModel(i, this)),
     );
     this.allFileMap = this.allFileList.reduce(
       (result, file) => {
         result[file.id] = file;
         return result;
       },
-      {} as Record<string, FileModel>,
+      {} as Record<string, ProjectFileModel>,
     );
     this.allFileList.forEach((file) => {
       if (file.parentId) {

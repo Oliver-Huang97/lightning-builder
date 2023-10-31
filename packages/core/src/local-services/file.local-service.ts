@@ -1,11 +1,11 @@
 import { Injectable } from '@lightning-builder/framework';
-import { FileAddRequest, FileDetailRecord, FileRecord, FileService } from '../services';
+import { FileAddRequest, FileRecord, FileService, FileListItem } from '../services';
 import { uuid } from '../utils/utils';
 import { db } from './database';
 
 @Injectable()
 export class FileLocalService extends FileService {
-  public async getFileList(projectId: string): Promise<FileRecord[]> {
+  public async getFileList(projectId: string): Promise<FileListItem[]> {
     return (await db.file.filter((i) => i.project_id === projectId).toArray()).map((i) => ({
       id: i.id,
       name: i.name,
@@ -15,7 +15,7 @@ export class FileLocalService extends FileService {
     }));
   }
 
-  public async getFileDetail(id: string): Promise<FileDetailRecord | null> {
+  public async getFileDetail(id: string): Promise<FileRecord | null> {
     const record = await db.file.get(id);
 
     if (!record) {

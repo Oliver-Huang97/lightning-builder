@@ -1,6 +1,10 @@
-<script lang="tsx" setup>
-import { createElementVNode } from "vue";
-import draggable from "vuedraggable";
+<script lang="ts" setup>
+import { app } from '@/stores/app.store';
+import type { ProjectModel } from '@lightning-builder/core';
+import { createElementVNode } from 'vue';
+import draggable from 'vuedraggable';
+
+const project = app.currentProject as ProjectModel;
 
 const list = [
   {
@@ -12,6 +16,13 @@ const list = [
     component: 'a-input'
   },
 ];
+
+const getData = async () => {
+  await project.getLibraryList();
+  console.log(project.libraryList);
+}
+
+getData();
 
 const clone = (item: any) => {
   return {
