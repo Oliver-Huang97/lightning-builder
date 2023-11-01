@@ -1,5 +1,6 @@
 import { Injectable } from '@lightning-builder/framework';
 import { FileRecord } from './file.service';
+import { LibraryComponentContent } from '../interfaces/library-component-content';
 
 export interface LibraryListItem {
   id: string;
@@ -9,7 +10,7 @@ export interface LibraryListItem {
 }
 
 export interface LibraryRecord extends LibraryListItem {
-  files: Array<FileRecord>;
+  files: Array<FileRecord<LibraryComponentContent>>;
 }
 
 @Injectable()

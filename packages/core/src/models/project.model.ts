@@ -1,11 +1,11 @@
-import { AutoWired, BaseModel } from '@lightning-builder/framework';
-import { FileService, ProjectRecord } from '../services';
+import { AutoWired } from '@lightning-builder/framework';
+import { FileService, LibraryService, ProjectRecord } from '../services';
 import { AppModel } from './app.model';
-import { LibraryService } from '../services/library.service';
 import { LibraryModel } from './library.model';
 import { ProjectFileModel } from './project-file.model';
+import { FileManageModel } from './file-manage.model';
 
-export class ProjectModel extends BaseModel {
+export class ProjectModel extends FileManageModel<ProjectFileModel> {
   @AutoWired()
   private readonly fileService!: FileService;
   @AutoWired()
@@ -16,9 +16,6 @@ export class ProjectModel extends BaseModel {
   public libraryIds = ['ant-design-vue'];
 
   public libraryList: Array<LibraryModel> = [];
-  public allFileList: Array<ProjectFileModel> = [];
-  public allFileMap: Record<string, ProjectFileModel> = {};
-  public treeFileList: Array<ProjectFileModel> = [];
   public openFiles: Array<ProjectFileModel> = [];
   public currentOpenFile: ProjectFileModel | null = null;
 
@@ -31,6 +28,10 @@ export class ProjectModel extends BaseModel {
     this.app = app;
   }
 
+  public async loadFiles() {
+    return (await this.fileService.getFileList(this.id)).map((i) => new ProjectFileModel(i, this));
+  }
+
   public async getLibraryList() {
     this.libraryList = (
       await Promise.all(
@@ -41,33 +42,6 @@ export class ProjectModel extends BaseModel {
         ),
       )
     ).filter((i) => i) as Array<LibraryModel>;
-  }
-
-  public async getFileList() {
-    this.allFileList = [];
-    this.allFileMap = {};
-    this.treeFileList = [];
-    this.allFileList = (await this.fileService.getFileList(this.id)).map((i) =>
-      this.createModel(new ProjectFileModel(i, this)),
-    );
-    this.allFileMap = this.allFileList.reduce(
-      (result, file) => {
-        result[file.id] = file;
-        return result;
-      },
-      {} as Record<string, ProjectFileModel>,
-    );
-    this.allFileList.forEach((file) => {
-      if (file.parentId) {
-        this.allFileMap[file.parentId]?.children.push(file);
-      }
-    });
-    this.allFileList.forEach((file) => {
-      file.children.sort((a, b) => (a.isDirectory ? -1 : 1));
-    });
-    this.treeFileList = this.allFileList
-      .filter((i) => !i.parentId)
-      .sort((a, b) => (a.isDirectory ? -1 : 1));
   }
 
   public createFile(name: string, isDirectory: boolean, parentId?: string) {

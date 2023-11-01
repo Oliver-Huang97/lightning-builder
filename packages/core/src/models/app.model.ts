@@ -1,6 +1,6 @@
 import { AutoWired, BaseModel } from '@lightning-builder/framework';
 import { ProjectModel } from './project.model';
-import { ProjectAddRequest, ProjectService } from '../services/project.service';
+import { ProjectAddRequest, ProjectService } from '../services';
 
 export class AppModel extends BaseModel {
   @AutoWired()

@@ -1,4 +1,4 @@
-import { ContentType } from './content-type';
+import { ContentType, FileContent } from './file-content';
 import { JSONSchemaType } from 'ajv';
 
 export interface Variable<T> {
@@ -23,13 +23,13 @@ export interface Method<T> {
 
 export interface ComponentNode {
   id: string;
-  definitionId: string;
+  methodDefinitionId: string;
   props: any;
   on: Record<string, Array<Function>>;
   children: Array<ComponentNode>;
 }
 
-export interface ComponentContent {
+export interface ComponentContent extends FileContent {
   type: ContentType.Component;
   variables: Array<Variable<any>>;
   methods: Array<Method<any>>;

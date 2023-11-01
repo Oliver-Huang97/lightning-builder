@@ -2,6 +2,7 @@ import { Injectable } from '@lightning-builder/framework';
 import { FileAddRequest, FileRecord, FileService, FileListItem } from '../services';
 import { uuid } from '../utils/utils';
 import { db } from './database';
+import { FileContent } from '../interfaces/file-content';
 
 @Injectable()
 export class FileLocalService extends FileService {
@@ -15,7 +16,7 @@ export class FileLocalService extends FileService {
     }));
   }
 
-  public async getFileDetail(id: string): Promise<FileRecord | null> {
+  public async getFileDetail<T extends FileContent>(id: string): Promise<FileRecord<T> | null> {
     const record = await db.file.get(id);
 
     if (!record) {
