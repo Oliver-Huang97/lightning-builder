@@ -1,60 +1,92 @@
 <script lang="ts" setup>
 import { app } from '@/stores/app.store';
+import type { LibraryFileModel } from '@lightning-builder/core';
 import type { ProjectModel } from '@lightning-builder/core';
-import { createElementVNode } from 'vue';
+import { ref } from 'vue';
 import draggable from 'vuedraggable';
+import { theme } from 'ant-design-vue';
+
+interface LibraryGroup {
+  name: string;
+  items: Array<LibraryFileModel>;
+}
+
+const token = theme.useToken().token;
 
 const project = app.currentProject as ProjectModel;
 
-const list = [
-  {
-    name: 'button',
-    component: 'a-button',
-  },
-  {
-    name: 'input',
-    component: 'a-input'
-  },
-];
+const generateList = (items: Array<LibraryFileModel>, parents: string[]) => {
+  const result: Array<LibraryGroup> = [];
+  const children = items.filter((i) => !i.isDirectory);
+
+  if (children.length) {
+    result.push({ name: parents.join(' > '), items: children })
+  }
+
+  items.forEach((item) => {
+    if (item.isDirectory) {
+      result.push(...generateList(item.children, [...parents, item.name]));
+    }
+  })
+  return result;
+};
+
+const list = ref<Array<LibraryGroup>>([]);
+const activeKeys = ref<Array<string>>([]);
 
 const getData = async () => {
-  await project.getLibraryList();
-  console.log(project.libraryList);
+  list.value = (await project.getLibraryList())
+    .map((i) => generateList(i.treeFileList, [i.name]))
+    .reduce((r, i) => r.concat(i), []);
+  activeKeys.value = list.value.map((i) => i.name);
 }
 
 getData();
 
-const clone = (item: any) => {
-  return {
-    name: createElementVNode(item.component),
-    component: item.component,
-  };
+const clone = (item: LibraryFileModel) => {
+  return item.nodes[0];
 };
-
-const onStart = (e: any) => {
-  e.clone = createElementVNode(list[e.oldIndex].component)
-}
 </script>
 
 <template>
-  <draggable class="dragArea list-group" :list="list" :group="{ name: 'components', pull: 'clone', put: false }"
-    :clone="clone" item-key="name" @start="onStart" :sort="false">
-    <template #item="{ element }">
-      <div class="list-group-item">
-        {{ element.name }}
-      </div>
-    </template>
-  </draggable>
+  <a-collapse v-model:active-key="activeKeys" ghost>
+    <a-collapse-panel v-for="group in list" :key="group.name" :header="group.name">
+      <draggable class="clearfix" :list="group.items" :group="{ name: 'components', pull: 'clone', put: false }"
+        :clone="clone" item-key="id" :sort="false">
+        <template #item="{ element }">
+          <div class="drag-component-item" :data-component-id="element.id">{{ element.name }}</div>
+        </template>
+      </draggable>
+    </a-collapse-panel>
+  </a-collapse>
 </template>
 
 <style lang="less" scoped>
-.component-library {
-  >div {
-    height: 20px;
+.ant-collapse-item {
 
-    &:hover {
-      background: rgba(22, 22, 22, .3);
+  >:deep(.ant-collapse-header) {
+    padding: 4px 4px 0;
+
+    >.ant-collapse-expand-icon {
+      padding-inline-end: 4px;
     }
   }
+
+  >:deep(.ant-collapse-content)>.ant-collapse-content-box {
+    padding: 4px;
+    padding-block: 4px;
+  }
+}
+
+.drag-component-item {
+  width: calc(50% - 8px);
+  margin: 4px;
+  padding: 0 2px;
+  background-color: v-bind('token.colorBgLayout');
+  color: v-bind('token.colorTextHeading');
+  border: 1px v-bind('token.colorBorder') solid;
+  font-size: 12px;
+  float: left;
+  cursor: move;
 }
 </style>

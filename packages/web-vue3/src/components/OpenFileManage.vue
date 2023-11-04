@@ -12,7 +12,7 @@ const project = app.currentProject as ProjectModel;
     :tab-bar-gutter="0" destroyInactiveTabPane hideAdd @tab-click="(id: string) => project.openFile(id)"
     @edit="(id: string) => project.closeFile(id)">
     <a-tab-pane v-for="file in project.openFiles" :key="file.id" :tab="file.name">
-      <OpenPageEditor />
+      <OpenPageEditor :file="file" />
     </a-tab-pane>
   </a-tabs>
   <a-empty v-else style="padding-top: 24px;">

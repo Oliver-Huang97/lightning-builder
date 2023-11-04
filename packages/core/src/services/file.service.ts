@@ -8,8 +8,9 @@ export interface FileListItem {
   parentId?: string;
   projectId: string;
 }
+
 export interface FileRecord<T extends FileContent> extends FileListItem {
-  content: T;
+  content: T | null;
 }
 
 export interface FileAddRequest {

@@ -38,10 +38,11 @@ export class ProjectModel extends FileManageModel<ProjectFileModel> {
         this.libraryIds.map((i) =>
           this.libraryService
             .getLibrary(i)
-            .then((record) => record && new LibraryModel(record, this.app)),
+            .then((record) => record && this.createModel(new LibraryModel(record, this.app))),
         ),
       )
     ).filter((i) => i) as Array<LibraryModel>;
+    return this.libraryList;
   }
 
   public createFile(name: string, isDirectory: boolean, parentId?: string) {
@@ -81,6 +82,14 @@ export class ProjectModel extends FileManageModel<ProjectFileModel> {
 
     if (file.id === this.currentOpenFile?.id) {
       this.currentOpenFile = this.openFiles[0] || null;
+    }
+  }
+
+  public getMethodDefinitionById(id: string) {
+    for (const library of this.libraryList) {
+      if (library.methodDefinitionMap[id]) {
+        return library.methodDefinitionMap[id];
+      }
     }
   }
 }

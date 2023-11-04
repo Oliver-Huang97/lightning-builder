@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import type { ProjectFileModel } from '@lightning-builder/core';
 import RenderStage from './RenderStage.vue';
+
+const props = defineProps<{ file: ProjectFileModel }>();
 
 </script>
 
@@ -7,7 +10,8 @@ import RenderStage from './RenderStage.vue';
   <a-layout>
     <a-layout-content>
       <div class="middle-page">
-        <RenderStage />
+        <a-spin v-if="!props.file.content"></a-spin>
+        <RenderStage v-else />
       </div>
     </a-layout-content>
     <a-layout-sider theme="light"></a-layout-sider>

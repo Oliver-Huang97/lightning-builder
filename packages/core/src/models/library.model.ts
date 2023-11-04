@@ -10,7 +10,8 @@ export class LibraryModel extends FileManageModel<LibraryFileModel> {
   public version: string;
   public projectId: string;
 
-  public methodDefinitions: Array<MethodDefinitionModel> = [];
+  public methodDefinitionList: Array<MethodDefinitionModel> = [];
+  public methodDefinitionMap: Record<string, MethodDefinitionModel> = {};
 
   public app: AppModel;
 
@@ -24,6 +25,16 @@ export class LibraryModel extends FileManageModel<LibraryFileModel> {
     this.projectId = data.projectId;
     this.app = app;
     this.files = data.files.map((i) => new LibraryFileModel(i, this));
+    // this.methodDefinitionList = data.definitions.map((i) =>
+    //   this.createModel(new MethodDefinitionModel(i)),
+    // );
+    // this.methodDefinitionMap = this.methodDefinitionList.reduce(
+    //   (map, item) => {
+    //     map[item.id] = item;
+    //     return map;
+    //   },
+    //   {} as Record<string, MethodDefinitionModel>,
+    // );
     this.getFileList();
   }
 

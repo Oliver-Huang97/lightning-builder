@@ -1,6 +1,5 @@
 import { AutoWired, BaseModel } from '@lightning-builder/framework';
 import { FileListItem, FileRecord, FileService } from '../services';
-import { ProjectModel } from './project.model';
 
 export class FileModel extends BaseModel {
   @AutoWired()
@@ -10,7 +9,7 @@ export class FileModel extends BaseModel {
   public name: string;
   public isDirectory: boolean;
   public parentId?: string;
-  public children: Array<FileModel> = [];
+  public children: Array<typeof this> = [];
 
   public constructor(data: FileListItem) {
     super();

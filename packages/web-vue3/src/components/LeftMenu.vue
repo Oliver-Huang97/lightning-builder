@@ -7,7 +7,7 @@ import FileManage from './FileManage.vue';
 
 <template>
   <a-tabs tab-position="left" size="small" :tab-bar-gutter="6">
-    <a-tab-pane key="1">
+    <a-tab-pane key="1" forceRender>
       <template #tab>
         <a-tooltip title="Files" placement="right">
           <FileOutlined style="font-size: 20px;" />

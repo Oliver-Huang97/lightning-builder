@@ -1,22 +1,23 @@
 <script lang="ts" setup>
-import { reactive } from "vue";
-import draggable from "vuedraggable";
+import { app } from "@/stores/app.store";
+import type { ComponentNodeModel, ProjectModel } from "@lightning-builder/core";
+import { DraggableNodes } from './DraggableNodes';
 
-const list: any[] = reactive([]);
+const project = app.currentProject as ProjectModel;
+
+const nodes = project.currentOpenFile?.content?.renderNodes as Array<ComponentNodeModel>;
+
+console.log(nodes);
 </script>
 
 <template>
-  <draggable class="dragArea list-group" :list="list" group="components" item-key="name" @change="(e) => console.log(e)">
-    <template #item="{ element }">
-      <div class="list-group-item">
-        <component :is="element.component" />
-      </div>
-    </template>
-  </draggable>
+  <div class="drag-area">
+    <DraggableNodes :nodes="nodes" />
+  </div>
 </template>
 
 <style lang="less" scoped>
-.dragArea {
+.drag-area {
   height: 100%;
 }
 </style>
