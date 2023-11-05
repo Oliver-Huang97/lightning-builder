@@ -1,18 +1,34 @@
 <script lang="ts" setup>
 import type { ProjectFileModel } from '@lightning-builder/core';
 import RenderStage from './RenderStage.vue';
+import { ref } from 'vue';
+import { message } from 'ant-design-vue';
 
 const props = defineProps<{ file: ProjectFileModel }>();
+const loading = ref(false);
+
+const save = async () => {
+  loading.value = true;
+  console.log(props.file);
+  await props.file.save();
+  loading.value = false;
+  message.success('success');
+}
 
 </script>
 
 <template>
   <a-layout>
     <a-layout-content>
-      <div class="middle-page">
-        <a-spin v-if="!props.file.content"></a-spin>
-        <RenderStage v-else />
+      <div class="page-actions clearfix"><a-button type="primary" style="float: right;" @click="save">Save</a-button>
       </div>
+      <div class="page-container">
+        <div class="middle-page">
+          <a-spin v-if="!props.file.content"></a-spin>
+          <RenderStage v-else />
+        </div>
+      </div>
+
     </a-layout-content>
     <a-layout-sider theme="light"></a-layout-sider>
   </a-layout>
@@ -23,8 +39,15 @@ const props = defineProps<{ file: ProjectFileModel }>();
   height: 100%;
 }
 
-.ant-layout-content {
+.page-actions {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 12px;
+}
+
+.page-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

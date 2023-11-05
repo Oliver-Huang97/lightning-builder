@@ -1,5 +1,5 @@
 import { ContentType, FileContent } from './file-content';
-import { JSONSchemaType } from 'ajv';
+import type { JSONSchemaType } from 'ajv';
 
 export interface Variable<T> {
   id: string;

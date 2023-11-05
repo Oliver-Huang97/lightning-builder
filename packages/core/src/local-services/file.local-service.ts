@@ -3,6 +3,7 @@ import { FileAddRequest, FileRecord, FileService, FileListItem } from '../servic
 import { uuid } from '../utils/utils';
 import { db } from './database';
 import { FileContent } from '../interfaces/file-content';
+import _ from 'lodash';
 
 @Injectable()
 export class FileLocalService extends FileService {
@@ -48,6 +49,11 @@ export class FileLocalService extends FileService {
 
   public async deleteFile(id: string): Promise<number> {
     await db.file.delete(id);
+    return 1;
+  }
+
+  public async patchFile(data: Partial<FileRecord<any>> & { id: string }): Promise<number> {
+    await db.file.update(data.id, { ..._.cloneDeep(data), update_at: new Date() });
     return 1;
   }
 }

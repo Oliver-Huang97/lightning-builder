@@ -25,4 +25,14 @@ export class ProjectFileModel extends FileModel {
     }
     this.content = new ComponentContentModel(file.content || null, this);
   }
+
+  public async save() {
+    const { id, content } = this;
+    const newContent = {
+      variables: content?.variables,
+      methods: content?.methods,
+      render: content?.renderNodes,
+    };
+    this.fileService.patchFile({ id, content: newContent });
+  }
 }

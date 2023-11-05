@@ -29,4 +29,6 @@ export abstract class FileService {
   public abstract createFile(data: FileAddRequest): Promise<string>;
 
   public abstract deleteFile(id: string): Promise<number>;
+
+  public abstract patchFile(data: Partial<FileRecord<any>> & { id: string }): Promise<number>;
 }
