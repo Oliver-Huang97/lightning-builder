@@ -15,7 +15,7 @@ import FileManage from './FileManage.vue';
       </template>
       <FileManage />
     </a-tab-pane>
-    <a-tab-pane key="2">
+    <a-tab-pane key="2" forceRender>
       <template #tab>
         <a-tooltip title="Components" placement="right">
           <AppstoreOutlined style="font-size: 20px;" />

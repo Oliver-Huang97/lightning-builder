@@ -1,4 +1,4 @@
-import { LibraryRecord } from '../services';
+import { Definition, LibraryRecord } from '../services';
 import { AppModel } from './app.model';
 import { LibraryFileModel } from './library-file.model';
 import { FileManageModel } from './file-manage.model';
@@ -10,8 +10,8 @@ export class LibraryModel extends FileManageModel<LibraryFileModel> {
   public version: string;
   public projectId: string;
 
-  public methodDefinitionList: Array<MethodDefinitionModel> = [];
-  public methodDefinitionMap: Record<string, MethodDefinitionModel> = {};
+  public methodDefinitionList: Array<Definition> = [];
+  public methodDefinitionMap: Record<string, Definition> = {};
 
   public app: AppModel;
 
@@ -25,16 +25,14 @@ export class LibraryModel extends FileManageModel<LibraryFileModel> {
     this.projectId = data.projectId;
     this.app = app;
     this.files = data.files.map((i) => new LibraryFileModel(i, this));
-    // this.methodDefinitionList = data.definitions.map((i) =>
-    //   this.createModel(new MethodDefinitionModel(i)),
-    // );
-    // this.methodDefinitionMap = this.methodDefinitionList.reduce(
-    //   (map, item) => {
-    //     map[item.id] = item;
-    //     return map;
-    //   },
-    //   {} as Record<string, MethodDefinitionModel>,
-    // );
+    this.methodDefinitionList = data.definitions;
+    this.methodDefinitionMap = this.methodDefinitionList.reduce(
+      (map, item) => {
+        map[item.id] = item;
+        return map;
+      },
+      {} as Record<string, Definition>,
+    );
     this.getFileList();
   }
 

@@ -4,7 +4,7 @@ export interface LibraryComponentNode {
   methodDefinitionId: string;
   props: any;
   on: Record<string, Array<Function>>;
-  children: Array<LibraryComponentNode>;
+  children: string | Array<LibraryComponentNode>;
 }
 
 export interface LibraryComponentContent extends FileContent {

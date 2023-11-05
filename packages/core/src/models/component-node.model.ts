@@ -7,7 +7,7 @@ export class ComponentNodeModel extends BaseModel {
   public methodDefinitionId: string;
   public props: any;
   public on: Record<string, Array<Function>>;
-  public children: Array<ComponentNodeModel>;
+  public children: string | Array<ComponentNodeModel>;
 
   public file: ProjectFileModel;
 
@@ -21,7 +21,11 @@ export class ComponentNodeModel extends BaseModel {
     this.methodDefinitionId = data.methodDefinitionId;
     this.props = data.props;
     this.on = data.on;
-    this.children = data.children.map((i) => new ComponentNodeModel(i, file));
+    if (Array.isArray(data.children)) {
+      this.children = data.children.map((i) => new ComponentNodeModel(i, file));
+    } else {
+      this.children = data.children;
+    }
     this.file = file;
   }
 }

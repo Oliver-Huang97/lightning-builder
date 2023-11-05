@@ -7,7 +7,6 @@ const project = app.currentProject as ProjectModel;
 
 const nodes = project.currentOpenFile?.content?.renderNodes as Array<ComponentNodeModel>;
 
-console.log(nodes);
 </script>
 
 <template>

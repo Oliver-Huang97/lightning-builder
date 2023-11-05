@@ -26,7 +26,7 @@ export interface ComponentNode {
   methodDefinitionId: string;
   props: any;
   on: Record<string, Array<Function>>;
-  children: Array<ComponentNode>;
+  children: string | Array<ComponentNode>;
 }
 
 export interface ComponentContent extends FileContent {

@@ -5,6 +5,7 @@ import type { ProjectModel } from '@lightning-builder/core';
 import { ref } from 'vue';
 import draggable from 'vuedraggable';
 import { theme } from 'ant-design-vue';
+import { useRootStore } from '@/stores/root.store';
 
 interface LibraryGroup {
   name: string;
@@ -14,6 +15,7 @@ interface LibraryGroup {
 const token = theme.useToken().token;
 
 const project = app.currentProject as ProjectModel;
+const rootStore = useRootStore();
 
 const generateList = (items: Array<LibraryFileModel>, parents: string[]) => {
   const result: Array<LibraryGroup> = [];
@@ -52,7 +54,7 @@ const clone = (item: LibraryFileModel) => {
   <a-collapse v-model:active-key="activeKeys" ghost>
     <a-collapse-panel v-for="group in list" :key="group.name" :header="group.name">
       <draggable class="clearfix" :list="group.items" :group="{ name: 'components', pull: 'clone', put: false }"
-        :clone="clone" item-key="id" :sort="false">
+        :clone="clone" item-key="id" :sort="false" @start="rootStore.startDrag" @end="rootStore.cancelDrag">
         <template #item="{ element }">
           <div class="drag-component-item" :data-component-id="element.id">{{ element.name }}</div>
         </template>

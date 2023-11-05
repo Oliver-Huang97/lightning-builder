@@ -22,7 +22,7 @@ export const antDesignVueLibrary: LibraryRecord = {
       parentId: 'general',
       content: {
         type: ContentType.LibraryComponent,
-        nodes: [{ methodDefinitionId: 'a-button', props: {}, on: {}, children: [] }],
+        nodes: [{ methodDefinitionId: 'a-button', props: {}, on: {}, children: 'Button' }],
       },
     },
     {
@@ -33,7 +33,7 @@ export const antDesignVueLibrary: LibraryRecord = {
       parentId: 'general',
       content: {
         type: ContentType.LibraryComponent,
-        nodes: [{ methodDefinitionId: 'a-typography-title', props: {}, on: {}, children: [] }],
+        nodes: [{ methodDefinitionId: 'a-typography-title', props: {}, on: {}, children: 'Title' }],
       },
     },
     {
@@ -44,7 +44,7 @@ export const antDesignVueLibrary: LibraryRecord = {
       parentId: 'general',
       content: {
         type: ContentType.LibraryComponent,
-        nodes: [{ methodDefinitionId: 'a-typography-text', props: {}, on: {}, children: [] }],
+        nodes: [{ methodDefinitionId: 'a-typography-text', props: {}, on: {}, children: 'Text' }],
       },
     },
     {
@@ -66,5 +66,10 @@ export const antDesignVueLibrary: LibraryRecord = {
       },
     },
   ],
-  definitions: [{ id: 'a-button', type: DefinitionType.Component, tag: 'a-button' }],
+  definitions: [
+    { id: 'a-button', type: DefinitionType.Component, tag: 'a-button' },
+    { id: 'a-typography-title', type: DefinitionType.Component, tag: 'a-typography-title' },
+    { id: 'a-typography-text', type: DefinitionType.Component, tag: 'a-typography-text' },
+    { id: 'a-input', type: DefinitionType.Component, tag: 'a-input' },
+  ],
 };
