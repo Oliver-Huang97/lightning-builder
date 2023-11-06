@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { app } from "@/stores/app.store";
-import type { ComponentNodeModel, ProjectModel } from "@lightning-builder/core";
+import type { ComponentNodeModel, ProjectFileModel } from "@lightning-builder/core";
 import { DraggableNodes } from './DraggableNodes';
+import { computed } from "vue";
 
-const project = app.currentProject as ProjectModel;
+const props = defineProps<{ file: ProjectFileModel }>();
 
-const nodes = project.currentOpenFile?.content?.renderNodes as Array<ComponentNodeModel>;
+const nodes = computed(() => props.file.content?.renderNodes as Array<ComponentNodeModel>);
 
 </script>
 

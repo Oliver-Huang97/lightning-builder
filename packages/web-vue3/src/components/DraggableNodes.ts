@@ -21,7 +21,15 @@ export function renderComponent(node: ComponentNodeModel): VNode {
   const children = Array.isArray(node.children)
     ? h(DraggableNodes, { nodes: node.children })
     : node.children;
-  return h(resolveComponent(methodDefinition.tag), node.props, children);
+  return h(
+    resolveComponent(methodDefinition.tag),
+    { ...node.props, onClick: () => (project.currentOpenFile!.currentSelectedNode = node) },
+    () => children,
+  );
+}
+
+export function OperationNodes(props: { nodes: Array<ComponentNodeModel> }) {
+  return props.nodes.map((i) => renderComponent(i));
 }
 
 export function DraggableNodes(props: { nodes: Array<ComponentNodeModel> }) {

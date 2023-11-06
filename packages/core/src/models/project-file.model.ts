@@ -1,11 +1,14 @@
 import { ComponentContent } from '../interfaces/component-content';
 import { FileListItem } from '../services';
 import { ComponentContentModel } from './component-content.model';
+import { ComponentNodeModel } from './component-node.model';
 import { FileModel } from './file.model';
 import { ProjectModel } from './project.model';
 
 export class ProjectFileModel extends FileModel {
   public content: ComponentContentModel | null = null;
+
+  public currentSelectedNode: ComponentNodeModel | null = null;
 
   public project: ProjectModel;
 

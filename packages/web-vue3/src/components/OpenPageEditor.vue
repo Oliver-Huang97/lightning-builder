@@ -3,6 +3,7 @@ import type { ProjectFileModel } from '@lightning-builder/core';
 import RenderStage from './RenderStage.vue';
 import { ref } from 'vue';
 import { message } from 'ant-design-vue';
+import OperationTree from './OperationTree.vue';
 
 const props = defineProps<{ file: ProjectFileModel }>();
 const loading = ref(false);
@@ -25,12 +26,13 @@ const save = async () => {
       <div class="page-container">
         <div class="middle-page">
           <a-spin v-if="!props.file.content"></a-spin>
-          <RenderStage v-else />
+          <RenderStage v-else :file="props.file" />
         </div>
       </div>
-
     </a-layout-content>
-    <a-layout-sider theme="light"></a-layout-sider>
+    <a-layout-sider theme="light">
+      <OperationTree v-if="props.file.currentSelectedNode" :file="props.file" />
+    </a-layout-sider>
   </a-layout>
 </template>
 

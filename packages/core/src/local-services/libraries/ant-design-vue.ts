@@ -67,7 +67,12 @@ export const antDesignVueLibrary: LibraryRecord = {
     },
   ],
   definitions: [
-    { id: 'a-button', type: DefinitionType.Component, tag: 'a-button' },
+    {
+      id: 'a-button',
+      type: DefinitionType.Component,
+      tag: 'a-button',
+      attributes: [{ label: 'Content', path: 'children', schema: { type: 'string' } }],
+    },
     { id: 'a-typography-title', type: DefinitionType.Component, tag: 'a-typography-title' },
     { id: 'a-typography-text', type: DefinitionType.Component, tag: 'a-typography-text' },
     { id: 'a-input', type: DefinitionType.Component, tag: 'a-input' },

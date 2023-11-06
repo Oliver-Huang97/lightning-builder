@@ -1,7 +1,7 @@
 import { Injectable } from '@lightning-builder/framework';
 import { FileRecord } from './file.service';
 import { LibraryComponentContent } from '../interfaces/library-component-content';
-import { ComponentContent } from '../interfaces/component-content';
+import { JSONSchemaType } from 'ajv';
 
 export interface LibraryListItem {
   id: string;
@@ -15,11 +15,26 @@ export enum DefinitionType {
   Component = 'component',
 }
 
+export interface OperationNode {
+  tag: string;
+  props: any;
+  on: Record<string, Array<Function>>;
+  children: string | Array<OperationNode>;
+}
+
+export interface DefinitionAttribute {
+  label: string;
+  path: string;
+  schema: JSONSchemaType<any>;
+}
+
 export interface BaseDefinition {
   id: string;
   type: DefinitionType;
-  operation?: ComponentContent;
+  operation?: Array<OperationNode>;
   generator?: Array<any>;
+  // temp
+  attributes?: Array<DefinitionAttribute>;
   [key: string]: any;
 }
 
