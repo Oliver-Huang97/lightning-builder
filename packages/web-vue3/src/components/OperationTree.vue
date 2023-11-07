@@ -27,7 +27,14 @@ const operation = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div :class="$style['operation-tree-container']">
+    <a-typography-title>{{ definition?.tag }}</a-typography-title>
     <DefinitionAttributeForm :node="node" :attributes="attributes" />
   </div>
 </template>
+
+<style module>
+.operation-tree-container {
+  padding: 4px;
+}
+</style>
